@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat PoC</title>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+  <table class="sortable">
+    <thead>
+      <tr>
+        <th>Filename</th>
+        <th>Content ID</th>
+        <th>Date</th>
+        <th>Uploaded</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="230da44527aab09a6a547ec8e8676dee6e2d" data-title="File12345" data-type="DOCS" data-system-id="10" data-system-name="3 Subcontractors">
+        <td>File12345.pdf</td>
+        <td>File12345.230da44527aab09a6a547ec8e8676dee6e2d</td>
+        <td>07/12/2022 8:46:10</td>
+        <td>05/12/2022 18:06:32</td>
+        <td>Open</td>
+      </tr>
+      <tr id="7BA7642D4D9644F2B0E4C5F11C75948F" data-title="TECHSUB" data-type="TECH" data-system-id="10" data-system-name="3 Subcontractors">
+        <td>TECHSUB.pdf</td>
+        <td>TECHSUB.7BA7642D4D9644F2B0E4C5F11C75948F</td>
+        <td>07/12/2022 8:46:10</td>
+        <td>05/12/2022 18:06:32</td>
+        <td>Open</td>
+      </tr>
+      <tr id="02F45EEFBB2E4918B9010F20D84EADE3" data-title="File951620" data-type="DWG" data-system-id="10" data-system-name="3 Subcontractors">
+        <td>File951620.pdf</td>
+        <td>File951620.02F45EEFBB2E4918B9010F20D84EADE3</td>
+        <td>07/12/2022 8:46:10</td>
+        <td>05/12/2022 18:06:32</td>
+        <td>Open</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+<script>
+  /*!
+   * bytes
+   * Copyright(c) 2012-2014 TJ Holowaychuk
+   * Copyright(c) 2015 Jed Watson
+   * MIT Licensed
+   */
+
+  'use strict';
+
+  var formatThousandsRegExp = /\B(?=(\d{3})+(?!\d))/g;
+  var formatDecimalsRegExp = /(?:\.0*|(\.[^0]+)0+)$/;
+
+  var map = {
+    b: 1,
+    kb: 1 << 10,
+    mb: 1 << 20,
+    gb: 1 << 30,
+    tb: Math.pow(1024, 4),
+    pb: Math.pow(1024, 5),
+  };
+
+  var parseRegExp = /^((-|\+)?(\d+(?:\.\d+)?)) *(kb|mb|gb|tb|pb)$/i;
+
+  /**
+   * Convert the given value in bytes into a string or parse to string to an integer in bytes.
+   *
+   * @param {string|number} value
+   * @param {{
+   *  case: [string],
+   *  decimalPlaces: [number]
+   *  fixedDecimals: [boolean]
+   *  thousandsSeparator: [string]
+   *  unitSeparator: [string]
+   *  }} [options] bytes options.
+   *
+   * @returns {string|number|null}
+   */
+
+  function bytes(value, options) {
+    if (typeof value === 'string') {
+      return parse(value);
+    }
+
+    if (typeof value === 'number') {
+      return format(value, options);
+    }
+
+    return null;
+  }
+
+  /**
+   * Format the given value in bytes into a string.
+   *
+   * If the value is negative, it is kept as such. If it is a float,
+   * it is rounded.
+   *
+   * @param {number} value
+   * @param {object} [options]
+   * @param {number} [options.decimalPlaces=2]
+   * @param {number} [options.fixedDecimals=false]
+   * @param {string} [options.thousandsSeparator=]
+   * @param {string} [options.unit=]
+   * @param {string} [options.unitSeparator=]
+   *
+   * @returns {string|null}
+   * @public
+   */
+
+  function format(value, options) {
+    if (!Number.isFinite(value)) {
+      return null;
+    }
+
+    var mag = Math.abs(value);
+    var thousandsSeparator = (options && options.thousandsSeparator) || '';
+    var unitSeparator = (options && options.unitSeparator) || '';
+    var decimalPlaces = options && options.decimalPlaces !== undefined ? options.decimalPlaces : 2;
+    var fixedDecimals = Boolean(options && options.fixedDecimals);
+    var unit = (options && options.unit) || '';
+
+    if (!unit || !map[unit.toLowerCase()]) {
+      if (mag >= map.pb) {
+        unit = 'PB';
+      } else if (mag >= map.tb) {
+        unit = 'TB';
+      } else if (mag >= map.gb) {
+        unit = 'GB';
+      } else if (mag >= map.mb) {
+        unit = 'MB';
+      } else if (mag >= map.kb) {
+        unit = 'KB';
+      } else {
+        unit = 'B';
+      }
+    }
+
+    var val = value / map[unit.toLowerCase()];
+    var str = val.toFixed(decimalPlaces);
+
+    if (!fixedDecimals) {
+      str = str.replace(formatDecimalsRegExp, '$1');
+    }
+
+    if (thousandsSeparator) {
+      str = str
+        .split('.')
+        .map(function(s, i) {
+          return i === 0 ? s.replace(formatThousandsRegExp, thousandsSeparator) : s;
+        })
+        .join('.');
+    }
+
+    return str + unitSeparator + unit;
+  }
+
+  /**
+   * Parse the string value into an integer in bytes.
+   *
+   * If no unit is given, it is assumed the value is in bytes.
+   *
+   * @param {number|string} val
+   *
+   * @returns {number|null}
+   * @public
+   */
+
+  function parse(val) {
+    if (typeof val === 'number' && !isNaN(val)) {
+      return val;
+    }
+
+    if (typeof val !== 'string') {
+      return null;
+    }
+
+    // Test if the string passed is valid
+    var results = parseRegExp.exec(val);
+    var floatValue;
+    var unit = 'b';
+
+    if (!results) {
+      // Nothing could be extracted from the given string
+      floatValue = parseInt(val, 10);
+      unit = 'b';
+    } else {
+      // Retrieve the value and the unit
+      floatValue = parseFloat(results[1]);
+      unit = results[4].toLowerCase();
+    }
+
+    if (isNaN(floatValue)) {
+      return null;
+    }
+
+    return Math.floor(map[unit] * floatValue);
+  }
+</script>
+
+<script>
+  let ENABLE_CHAT = true;
+  const PROJECT_NUMBER = 'DFM12345654321';
+  const TOKEN = '6314D2F6033444A0A76F8F677F82D5CC'; // TODO: Update every time
+  const MAX_FILE_SIZE = 100 * 1000 * 1000; // 100Mb
+  const API_BASE_URL = 'http://localhost:50156';
+
+  const randomNum = (Math.random() * 20).toFixed(0).toString();
+  const USER_EMAIL = `cristian.${randomNum}@computech.com`;
+  const USER_KEY = `2FD0887B8DE147D78041D1456-${randomNum}`;
+  const USER_FULLNAME = `Cristian ${randomNum}`;
+
+  const moment = data => {
+    return {
+      format: d => data.toLocaleString(),
+    };
+  };
+</script>
+
+<script type="module" src="chatroom_loader.js"></script>
+
+</html>

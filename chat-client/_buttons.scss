@@ -1,0 +1,68 @@
+@import "variables";
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 1em;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: baseline;
+  justify-content: center;
+
+  &.primary {
+    background: $primary-color;
+    color: $white;
+
+    .icon {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+    }
+  }
+
+  &.secondary {
+    background: $secondary-color;
+    color: $white;
+
+    .icon {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      background-color: lighten($secondary-color, 10%);
+    }
+  }
+
+  &.link {
+    color: $primary-color;
+    padding: 4px;
+
+    &:hover {
+      text-decoration: underline;
+      color: lighten($primary-color, 10%);
+    }
+  }
+
+  &.small {
+    padding: 0.7em;
+    font-size: 0.8em;
+  }
+
+  &.icon {
+    padding: 0.55em;
+    align-content: center;
+  }
+
+  &:disabled {
+    background-color: $light-gray;
+
+    &:hover {
+      background-color: $light-gray;
+      cursor: default;
+    }
+  }
+}

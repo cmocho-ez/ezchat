@@ -1,0 +1,28 @@
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+table {
+  width: 100%;
+
+  th {
+    background-color: #292929;
+    color: aliceblue;
+  }
+
+  tr {
+    &:nth-child(odd) {
+      td {
+        background-color: bisque;
+      }
+    }
+
+    &:hover td {
+      background-color: burlywood;
+    }
+  }
+}
+
+@import 'badge';
+@import 'chatroom';

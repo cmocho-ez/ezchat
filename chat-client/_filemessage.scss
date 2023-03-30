@@ -1,0 +1,95 @@
+@import "variables";
+
+.file-message {
+  margin: 4px;
+  background-color: #e7e7e7;
+  border: #29292920;
+  max-width: 80%;
+  border: solid 1px #29292920;
+  border-radius: 6px;
+  display: grid;
+  grid-auto-flow: row;
+  overflow: hidden;
+  user-select: none;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.5) 0 0 2px 6px;
+    }
+  }
+
+  &.mine {
+    justify-self: end;
+  }
+
+  &.new .progress-amount {
+    background-color: $gray;
+  }
+
+  &.error .progress-amount {
+    background-color: $red;
+  }
+
+  &.done {
+    cursor: pointer;
+
+    .progress-amount {
+      background-color: $green;
+    }
+  }
+
+  .progress-bar {
+    width: 100%;
+
+    .progress-amount {
+      border-radius: 6px;
+      min-height: 6px;
+    }
+  }
+
+  .header {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto min-content min-content;
+    column-gap: 8px;
+    padding: 6px;
+    background-color: #292929c0;
+    color: #e7e7e7;
+    align-items: center;
+
+    .button {
+      cursor: pointer;
+    }
+  }
+
+  .file-info {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: min-content auto;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+
+    .file-preview {
+      height: 48px;
+      background: no-repeat center center;
+      background-size: cover;
+    }
+
+    .data {
+      line-height: 1.5em;
+      font-size: 1rem;
+      padding-right: 8px;
+
+      span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: $gray;
+      }
+    }
+  }
+}
