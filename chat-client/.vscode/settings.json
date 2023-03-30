@@ -1,0 +1,12 @@
+{
+  "liveSassCompile.settings.compileOnWatch": true,
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css"
+    }
+  ],
+  "liveSassCompile.settings.generateMap": false,
+  "liveSassCompile.settings.includeItems": ["/*.scss"],
+  "editor.linkedEditing": true
+}

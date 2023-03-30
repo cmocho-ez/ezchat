@@ -1,0 +1,38 @@
+@import 'variables';
+
+.cr-tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+  justify-content: start;
+
+  .cr-tab {
+    display: grid;
+    grid-auto-flow: row;
+    padding: 4px;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+
+    .cr-tab-label {
+      display: grid;
+      grid-template-columns: auto min-content;
+      align-items: center;
+
+      span {
+        padding: 2px 6px;
+        white-space: nowrap;
+      }
+    }
+
+    &.active {
+      background-color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 5px 2px;
+    }
+  }
+
+  .cr-tab-info {
+    font-size: 9px;
+    color: #292929a0;
+  }
+}

@@ -1,0 +1,19 @@
+@import 'variables';
+
+.cr-badge {
+  font-size: 10px;
+  font-weight: 900;
+  background-color: $red;
+  border-radius: 500px;
+  place-content: center;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 4px 2px;
+  padding: 2px 6px;
+  white-space: nowrap;
+
+  &.absolute {
+    position: absolute;
+    margin-top: -20px;
+    margin-left: 20px;
+  }
+}
