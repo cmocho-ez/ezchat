@@ -5,6 +5,10 @@
   "license": "MIT",
   "type": "module",
   "private": true,
+  "author": {
+    "name": "Cristian Mocho",
+    "email": "cristian.mocho@ezsystems.net"
+  },
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon server.js"
