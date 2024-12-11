@@ -2,7 +2,10 @@
   "name": "attachments-api",
   "version": "1.1.0",
   "main": "server.js",
-  "author": "Cristian Mocho <cristian@computech.ie>",
+  "author": {
+    "name": "Cristian Mocho",
+    "email": "cristian.mocho@ezsystems.net"
+  },
   "license": "MIT",
   "private": true,
   "type": "module",
