@@ -1,12 +1,11 @@
-import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
-import ChatRoom from './chatroom.js';
+import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+import ChatRoom from "./chatroom.js";
 
-// const chatServerURL = 'https://transfer.onlinedfm.com:50155';
-const chatServerURL = 'http://localhost:50156';
+const chatServerURL = "http://localhost:50156";
 
 if (ENABLE_CHAT) {
   const checkForTable = setInterval(() => {
-    const $table = $('table.sortable');
+    const $table = $("table.sortable");
 
     // Check if table exists
     if ($table.length > 0) {
@@ -32,11 +31,13 @@ if (ENABLE_CHAT) {
       chatRoom.Render();
 
       // Add chat buttons to current interface
-      chatRoom.AddChatButtons({ parent: $table, nodes: $table.find('tr[id]').find('td:first') });
+      chatRoom.AddChatButtons({
+        parent: $table,
+        nodes: $table.find("tr[id]").find("td:first"),
+      });
 
       // Finally, check for unread messages
       chatRoom.GetUnreadRooms();
     }
   }, 250);
 }
-
